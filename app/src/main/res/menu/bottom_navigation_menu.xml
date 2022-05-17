@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/home_page_fragment"
+        android:enabled="true"
+        android:icon="@drawable/nav_home"
+        android:title="@string/home"/>
+    <item
+        android:id="@+id/doctor_page_fragment"
+        android:enabled="true"
+        android:icon="@drawable/nav_people"
+        android:title="@string/doctor"/>
+
+    <item
+        android:id="@+id/appointment_page_fragment"
+        android:enabled="true"
+        android:icon="@drawable/nav_appointment"
+        android:title="@string/appointment"/>
+
+    <item
+        android:id="@+id/account_page_fragment"
+        android:enabled="true"
+        android:icon="@drawable/nav_account"
+        android:title="@string/account"/>
+</menu>

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    style="?attr/materialCardViewFilledStyle"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:backgroundTint="?attr/colorPrimaryContainer">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="horizontal"
+        android:padding="15dp">
+
+        <RelativeLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="2">
+
+            <TextView
+                android:id="@+id/tv_header"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Looking for Your desire specialist doctor" />
+
+            <TextView
+                android:id="@+id/tv_doctor_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/tv_specialist"
+                android:layout_alignStart="@id/tv_clinic"
+                android:text="Dr. Osama elsayed" />
+
+            <TextView
+                android:id="@+id/tv_specialist"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_above="@id/tv_clinic"
+                android:layout_alignStart="@id/tv_clinic"
+                android:text="Medicine and Heart Specialist" />
+
+            <TextView
+                android:id="@+id/tv_clinic"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_toRightOf="@id/ly_line"
+                android:text="Good Health Clinic" />
+
+            <RelativeLayout
+                android:id="@+id/ly_line"
+                android:layout_width="2dp"
+                android:layout_height="0dp"
+                android:layout_alignTop="@id/tv_doctor_name"
+                android:layout_alignBottom="@id/tv_clinic"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentBottom="true"
+                android:layout_marginEnd="5dp"
+                android:background="?attr/colorTertiary">
+
+            </RelativeLayout>
+
+        </RelativeLayout>
+
+        <ImageView
+            android:id="@+id/iv_doctor_image"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:scaleType="centerCrop"
+            android:src="@drawable/im_doctor1" />
+
+    </LinearLayout>
+
+</com.google.android.material.card.MaterialCardView>
