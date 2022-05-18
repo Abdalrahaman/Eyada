@@ -2,6 +2,7 @@ package com.omranic.eyada.fragment
 
 import android.os.Bundle
 import android.os.Handler
+import android.os.Looper
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -29,7 +30,7 @@ class HomeFragment : Fragment() {
     private val categoryViewModel: CategoryViewModel by activityViewModels()
     private val doctorViewModel: DoctorViewModel by activityViewModels()
 
-    private val handler = Handler()
+    private val handler = Handler(Looper.getMainLooper())
 
     private lateinit var adAdapter: AdAdapter
     private lateinit var doctorAdapter: AvailableDoctorAdapter

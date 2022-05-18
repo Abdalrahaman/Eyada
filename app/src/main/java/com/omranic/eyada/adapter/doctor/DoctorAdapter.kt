@@ -47,6 +47,7 @@ class DoctorAdapter : RecyclerView.Adapter<DoctorAdapter.DoctorViewHolder>() {
 
             binding.cardView.setOnClickListener(View.OnClickListener {
                 val intent = Intent(it.context, DoctorInfoActivity::class.java)
+                intent.putExtra("doctor", doctors[index])
                 it.context.startActivity(intent)
             })
         }
