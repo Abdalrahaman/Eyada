@@ -34,10 +34,10 @@ class AdAdapter : RecyclerView.Adapter<AdAdapter.AdViewHolder>() {
         RecyclerView.ViewHolder(binding.root) {
         fun bind(index: Int) {
             binding.tvHeader.text = ads[index].header
-            binding.tvDoctorName.text = ads[index].name
-            binding.tvSpecialist.text = ads[index].specialist
-            binding.tvClinic.text = ads[index].clinicName
-            Glide.with(binding.root).load(ads[index].image).into(binding.ivDoctorImage)
+            binding.tvDoctorName.text = ads[index].doctor.name
+            binding.tvSpecialist.text = ads[index].doctor.specialist
+            binding.tvClinic.text = ads[index].doctor.clinic.name
+            Glide.with(binding.root).load(ads[index].doctor.image).into(binding.ivDoctorImage)
         }
     }
 }

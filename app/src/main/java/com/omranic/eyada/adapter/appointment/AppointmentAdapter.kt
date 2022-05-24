@@ -35,9 +35,9 @@ class AppointmentAdapter : RecyclerView.Adapter<AppointmentAdapter.AppointmentVi
     inner class AppointmentViewHolder(private val binding: AppointmentItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
         fun bind(index: Int) {
-            binding.tvDoctorName.text = appointments[index].name
-            binding.tvSpecialist.text = appointments[index].specialist
-            Glide.with(binding.root).load(appointments[index].image).into(binding.ivDoctorImage)
+            binding.tvDoctorName.text = appointments[index].doctor.name
+            binding.tvSpecialist.text = appointments[index].doctor.specialist
+            Glide.with(binding.root).load(appointments[index].doctor.image).into(binding.ivDoctorImage)
             binding.tvDate.text = appointments[index].date
             binding.tvTime.text = appointments[index].time
 
