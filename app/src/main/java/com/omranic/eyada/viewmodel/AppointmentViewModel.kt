@@ -22,7 +22,7 @@ class AppointmentViewModel @Inject constructor(private val repository: Repositor
     val appointments : MutableLiveData<Resource<List<Appointment>>> = MutableLiveData()
 
     init {
-        getAppointments(1)
+//        getAppointments(1)
     }
 
     fun getAppointments(patientId: Int) = viewModelScope.launch {

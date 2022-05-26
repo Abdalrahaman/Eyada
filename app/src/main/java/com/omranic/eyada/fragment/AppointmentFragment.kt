@@ -12,7 +12,9 @@ import com.omranic.eyada.adapter.appointment.AppointmentAdapter
 import com.omranic.eyada.databinding.FragmentAppointmentBinding
 import com.omranic.eyada.util.Resource
 import com.omranic.eyada.viewmodel.AppointmentViewModel
+import com.omranic.eyada.viewmodel.ConnectivityLiveData
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class AppointmentFragment : Fragment() {
@@ -22,6 +24,9 @@ class AppointmentFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val appointmentViewModel: AppointmentViewModel by activityViewModels()
+
+    @Inject
+    lateinit var connectivityLiveData: ConnectivityLiveData
 
     private lateinit var appointmentAdapter: AppointmentAdapter
 
@@ -38,6 +43,15 @@ class AppointmentFragment : Fragment() {
 
         // Initialize UI Components
         initUI()
+
+        connectivityLiveData.observe(viewLifecycleOwner, Observer { isConnected ->
+            if (isConnected){
+                Log.d(TAG, "error not occured: connected")
+                appointmentViewModel.getAppointments(1)
+            }else{
+                Log.e(TAG, "error occured: no internet connection")
+            }
+        })
 
         appointmentViewModel.appointments.observe(viewLifecycleOwner, Observer {response ->
             when(response){

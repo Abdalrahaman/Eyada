@@ -11,8 +11,10 @@ import androidx.lifecycle.Observer
 import com.omranic.eyada.adapter.doctor.DoctorAdapter
 import com.omranic.eyada.databinding.FragmentDoctorBinding
 import com.omranic.eyada.util.Resource
+import com.omranic.eyada.viewmodel.ConnectivityLiveData
 import com.omranic.eyada.viewmodel.DoctorViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
 @AndroidEntryPoint
 class DoctorFragment : Fragment() {
@@ -22,6 +24,9 @@ class DoctorFragment : Fragment() {
     private val binding get() = _binding!!
 
     private val doctorViewModel: DoctorViewModel by activityViewModels()
+
+    @Inject
+    lateinit var connectivityLiveData: ConnectivityLiveData
 
     private lateinit var doctorAdapter: DoctorAdapter
 
@@ -38,6 +43,15 @@ class DoctorFragment : Fragment() {
 
         // Initialize UI Components
         initUI()
+
+        connectivityLiveData.observe(viewLifecycleOwner, Observer { isConnected ->
+            if (isConnected){
+                Log.d(TAG, "error not occured: connected")
+                doctorViewModel.getDoctors()
+            }else{
+                Log.e(TAG, "error occured: no internet connection")
+            }
+        })
 
         doctorViewModel.doctors.observe(viewLifecycleOwner, Observer {response ->
             when(response){

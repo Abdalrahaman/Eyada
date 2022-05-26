@@ -20,8 +20,8 @@ class DoctorViewModel @Inject constructor(private val repository: Repository) : 
     val availableDoctors : MutableLiveData<Resource<List<Doctor>>> = MutableLiveData()
 
     init {
-        getDoctors()
-        getAvailableDoctors()
+//        getDoctors()
+//        getAvailableDoctors()
     }
 
     fun getDoctors() = viewModelScope.launch {

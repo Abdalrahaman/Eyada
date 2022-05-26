@@ -66,6 +66,8 @@ class HomeFragment : Fragment() {
         connectivityLiveData.observe(viewLifecycleOwner, Observer { isConnected ->
             if (isConnected){
                 Log.d(TAG, "error not occured: connected")
+                adViewModel.getAds()
+                doctorViewModel.getAvailableDoctors()
             }else{
                 Log.e(TAG, "error occured: no internet connection")
             }

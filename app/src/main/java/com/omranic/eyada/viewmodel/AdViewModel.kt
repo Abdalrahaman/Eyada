@@ -21,7 +21,7 @@ class AdViewModel @Inject constructor(private val repository: Repository) : View
     val ads : MutableLiveData<Resource<List<Ad>>> = MutableLiveData()
 
     init {
-        getAds()
+//        getAds()
     }
 
     fun getAds() = viewModelScope.launch {
@@ -45,14 +45,4 @@ class AdViewModel @Inject constructor(private val repository: Repository) : View
         }
         return Resource.Error(response.message())
     }
-
-//    private suspend fun safeAdsCall(){
-//        ads.postValue(Resource.Loading())
-//        try {
-//            val response = repository.getAds()
-//            ads.postValue(handleAdsResponse(response))
-//        }catch (t: Throwable){
-//
-//        }
-//    }
 }
