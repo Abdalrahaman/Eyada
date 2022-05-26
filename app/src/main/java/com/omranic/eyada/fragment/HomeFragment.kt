@@ -1,8 +1,10 @@
 package com.omranic.eyada.fragment
 
+import android.content.Context
 import android.os.Bundle
 import android.os.Handler
 import android.os.Looper
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,18 +19,29 @@ import com.omranic.eyada.adapter.home.AdAdapter
 import com.omranic.eyada.adapter.home.CategoryAdapter
 import com.omranic.eyada.adapter.home.AvailableDoctorAdapter
 import com.omranic.eyada.databinding.FragmentHomeBinding
+import com.omranic.eyada.util.Resource
 import com.omranic.eyada.viewmodel.AdViewModel
 import com.omranic.eyada.viewmodel.CategoryViewModel
+import com.omranic.eyada.viewmodel.ConnectivityLiveData
 import com.omranic.eyada.viewmodel.DoctorViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.qualifiers.ApplicationContext
+import javax.inject.Inject
 import kotlin.math.abs
 
+@AndroidEntryPoint
 class HomeFragment : Fragment() {
+
+    private val TAG = "HomeFragment"
     private var _binding: FragmentHomeBinding? = null
     private val binding get() = _binding!!
 
     private val adViewModel: AdViewModel by activityViewModels()
     private val categoryViewModel: CategoryViewModel by activityViewModels()
     private val doctorViewModel: DoctorViewModel by activityViewModels()
+
+    @Inject
+    lateinit var connectivityLiveData: ConnectivityLiveData
 
     private val handler = Handler(Looper.getMainLooper())
 
@@ -50,8 +63,29 @@ class HomeFragment : Fragment() {
         // Initialize UI Components
         initUI()
 
-        adViewModel.getAds().observe(viewLifecycleOwner, Observer {
-            adAdapter.setAdsData(it)
+        connectivityLiveData.observe(viewLifecycleOwner, Observer { isConnected ->
+            if (isConnected){
+                Log.d(TAG, "error not occured: connected")
+            }else{
+                Log.e(TAG, "error occured: no internet connection")
+            }
+        })
+
+        adViewModel.ads.observe(viewLifecycleOwner, Observer {response ->
+            when(response){
+                is Resource.Success -> {
+                    response.data?.let {
+                        adAdapter.setAdsData(it)
+                    }
+                }
+                is Resource.Error -> {
+                    response.message?.let {
+                        Log.e(TAG, "error occured: $it")
+                    }
+                }
+                is Resource.Loading -> {
+                }
+            }
         })
 
         categoryViewModel.getCategories().observe(viewLifecycleOwner, Observer {
@@ -59,8 +93,21 @@ class HomeFragment : Fragment() {
             binding.rvCategories.adapter = categoryAdapter
         })
 
-        doctorViewModel.getAvailableDoctors().observe(viewLifecycleOwner, Observer {
-            doctorAdapter.setAvailableDoctorData(it)
+        doctorViewModel.availableDoctors.observe(viewLifecycleOwner, Observer {response ->
+            when(response){
+                is Resource.Success -> {
+                    response.data?.let {
+                        doctorAdapter.setAvailableDoctorData(it)
+                    }
+                }
+                is Resource.Error -> {
+                    response.message?.let {
+                        Log.e(TAG, "error occured: $it")
+                    }
+                }
+                is Resource.Loading -> {
+                }
+            }
         })
 
     }

@@ -1,6 +1,7 @@
 package com.omranic.eyada.di
 
 import com.omranic.eyada.network.EyadaApiService
+import com.omranic.eyada.util.Constants.Companion.BASE_URL
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -12,7 +13,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object RetrofitModule {
-    private const val BASE_URL = "https://toric-reenlistment.000webhostapp.com/"
 
     @Singleton
     @Provides

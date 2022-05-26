@@ -1,63 +1,76 @@
 package com.omranic.eyada.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.omranic.eyada.model.Doctor
 import com.omranic.eyada.repository.Repository
+import com.omranic.eyada.util.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import retrofit2.Response
+import java.io.IOException
 import javax.inject.Inject
 
 @HiltViewModel
 class DoctorViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
-    private val TAG = "DoctorViewModel"
-    private var doctors = MutableLiveData<List<Doctor>>()
-    private var availableDoctors = MutableLiveData<List<Doctor>>()
+    val doctors : MutableLiveData<Resource<List<Doctor>>> = MutableLiveData()
+    val availableDoctors : MutableLiveData<Resource<List<Doctor>>> = MutableLiveData()
 
-    fun getDoctors(): LiveData<List<Doctor>> {
-        viewModelScope.launch {
-            loadDoctors()
-        }
-        return doctors
+    init {
+        getDoctors()
+        getAvailableDoctors()
     }
 
-    fun getAvailableDoctors(): LiveData<List<Doctor>> {
-        viewModelScope.launch {
-            loadAvailableDoctors()
+    fun getDoctors() = viewModelScope.launch {
+        doctors.postValue(Resource.Loading())
+        try {
+            val response = repository.getDoctors()
+            doctors.postValue(handleDoctorsResponse(response))
+        }catch (t: Throwable){
+            when(t){
+                is IOException -> doctors.postValue(Resource.Error("Network Failure"))
+                else -> doctors.postValue(Resource.Error("Conversion Error"))
+            }
         }
-        return availableDoctors
     }
 
-    fun getDoctorsBySpecialist(specialist: String): LiveData<List<Doctor>> {
-        viewModelScope.launch {
-            loadDoctorsBySpecialist(specialist)
+    fun getAvailableDoctors() = viewModelScope.launch {
+        availableDoctors.postValue(Resource.Loading())
+        try {
+            val response = repository.getAvailableDoctors()
+            availableDoctors.postValue(handleDoctorsResponse(response))
+        }catch (t: Throwable){
+            when(t){
+                is IOException -> availableDoctors.postValue(Resource.Error("Network Failure"))
+                else -> availableDoctors.postValue(Resource.Error("Conversion Error"))
+            }
         }
-        return doctors
+
     }
 
+    fun getDoctorsBySpecialist(specialist: String) = viewModelScope.launch {
+        doctors.postValue(Resource.Loading())
+        try {
+            val response = repository.getDoctorsBySpecialist(specialist)
+            doctors.postValue(handleDoctorsResponse(response))
+        }catch (t: Throwable){
+            when(t){
+                is IOException -> doctors.postValue(Resource.Error("Network Failure"))
+                else -> doctors.postValue(Resource.Error("Conversion Error"))
+            }
+        }
 
-    private suspend fun loadDoctors() {
-        val response = repository.getDoctors()
+    }
+
+    private fun handleDoctorsResponse(response: Response<List<Doctor>>) : Resource<List<Doctor>>{
         if (response.isSuccessful){
-            doctors.value = response.body()
+            response.body()?.let {
+                return Resource.Success(it)
+            }
         }
-    }
-
-    private suspend fun loadAvailableDoctors() {
-        val response = repository.getAvailableDoctors()
-        if (response.isSuccessful){
-            availableDoctors.value = response.body()
-        }
-    }
-
-    private suspend fun loadDoctorsBySpecialist(specialist: String) {
-        val response = repository.getDoctorsBySpecialist(specialist)
-        if (response.isSuccessful){
-            doctors.value = response.body()
-        }
+        return Resource.Error(response.message())
     }
 }

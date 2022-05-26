@@ -7,6 +7,7 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.omranic.eyada.databinding.ActivityMainBinding
+import com.omranic.eyada.viewmodel.ConnectivityLiveData
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint

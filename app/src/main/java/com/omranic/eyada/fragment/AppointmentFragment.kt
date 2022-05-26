@@ -1,6 +1,7 @@
 package com.omranic.eyada.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.omranic.eyada.adapter.appointment.AppointmentAdapter
 import com.omranic.eyada.databinding.FragmentAppointmentBinding
+import com.omranic.eyada.util.Resource
 import com.omranic.eyada.viewmodel.AppointmentViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class AppointmentFragment : Fragment() {
 
+    private val TAG = "AppointmentFragment"
     private var _binding: FragmentAppointmentBinding?= null
     private val binding get() = _binding!!
 
@@ -34,8 +39,27 @@ class AppointmentFragment : Fragment() {
         // Initialize UI Components
         initUI()
 
-        appointmentViewModel.getAppointments(1).observe(viewLifecycleOwner, Observer {
-            appointmentAdapter.setAppointmentsData(it)
+        appointmentViewModel.appointments.observe(viewLifecycleOwner, Observer {response ->
+            when(response){
+                is Resource.Success -> {
+                    binding.progressIndicator.visibility = View.INVISIBLE
+                    binding.rvAppointment.visibility = View.VISIBLE
+                    response.data.let {
+                        appointmentAdapter.setAppointmentsData(it!!)
+                    }
+                }
+                is Resource.Error -> {
+                    binding.progressIndicator.visibility = View.INVISIBLE
+                    binding.rvAppointment.visibility = View.INVISIBLE
+                    response.message.let {
+                        Log.e(TAG, "error occured: $it")
+                    }
+                }
+                is Resource.Loading -> {
+                    binding.progressIndicator.visibility = View.VISIBLE
+                    binding.rvAppointment.visibility = View.INVISIBLE
+                }
+            }
         })
     }
 

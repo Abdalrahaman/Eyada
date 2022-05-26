@@ -1,6 +1,7 @@
 package com.omranic.eyada.fragment
 
 import android.os.Bundle
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -9,10 +10,14 @@ import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
 import com.omranic.eyada.adapter.doctor.DoctorAdapter
 import com.omranic.eyada.databinding.FragmentDoctorBinding
+import com.omranic.eyada.util.Resource
 import com.omranic.eyada.viewmodel.DoctorViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DoctorFragment : Fragment() {
 
+    private val TAG = "DoctorFragment"
     private var _binding: FragmentDoctorBinding?= null
     private val binding get() = _binding!!
 
@@ -34,8 +39,27 @@ class DoctorFragment : Fragment() {
         // Initialize UI Components
         initUI()
 
-        doctorViewModel.getDoctors().observe(viewLifecycleOwner, Observer {
-            doctorAdapter.setDoctorData(it)
+        doctorViewModel.doctors.observe(viewLifecycleOwner, Observer {response ->
+            when(response){
+                is Resource.Success -> {
+                    binding.progressIndicator.visibility = View.INVISIBLE
+                    binding.recyclerView.visibility = View.VISIBLE
+                    response.data?.let {
+                        doctorAdapter.setDoctorData(it)
+                    }
+                }
+                is Resource.Error -> {
+                    binding.progressIndicator.visibility = View.INVISIBLE
+                    binding.recyclerView.visibility = View.INVISIBLE
+                    response.message?.let {
+                        Log.e(TAG, "error occured: $it")
+                    }
+                }
+                is Resource.Loading -> {
+                    binding.progressIndicator.visibility = View.VISIBLE
+                    binding.recyclerView.visibility = View.INVISIBLE
+                }
+            }
         })
 
         binding.chipLayout.chipSpecialistGroup.setOnCheckedStateChangeListener { group, checkedIds ->
