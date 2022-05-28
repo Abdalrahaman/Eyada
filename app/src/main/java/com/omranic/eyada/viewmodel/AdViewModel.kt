@@ -20,10 +20,6 @@ class AdViewModel @Inject constructor(private val repository: Repository) : View
 
     val ads : MutableLiveData<Resource<List<Ad>>> = MutableLiveData()
 
-    init {
-//        getAds()
-    }
-
     fun getAds() = viewModelScope.launch {
         ads.postValue(Resource.Loading())
         try {

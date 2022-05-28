@@ -21,10 +21,6 @@ class AppointmentViewModel @Inject constructor(private val repository: Repositor
     private val TAG = "AppointmentViewModel"
     val appointments : MutableLiveData<Resource<List<Appointment>>> = MutableLiveData()
 
-    init {
-//        getAppointments(1)
-    }
-
     fun getAppointments(patientId: Int) = viewModelScope.launch {
         appointments.postValue(Resource.Loading())
         try {

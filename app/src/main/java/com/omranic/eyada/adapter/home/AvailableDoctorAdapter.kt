@@ -36,7 +36,7 @@ class AvailableDoctorAdapter : RecyclerView.Adapter<AvailableDoctorAdapter.Docto
         fun bind(index: Int) {
             binding.tvDoctorName.text = doctors[index].name
             binding.tvSpecialist.text = doctors[index].specialist
-            binding.tvExperienceNumber.text = doctors[index].experience.toString()
+            binding.tvExperienceNumber.text = doctors[index].experience.toString() + " Years"
             binding.tvPatientNumber.text = doctors[index].patientNumber
             binding.ratingbar.rating = doctors[index].rate
             Glide.with(binding.root).load(doctors[index].image).into(binding.ivDoctorImage)

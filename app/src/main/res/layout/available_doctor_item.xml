@@ -21,6 +21,7 @@
                 android:id="@+id/tv_doctor_name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:fontFamily="@font/roboto_bold"
                 android:text="Dr. Serena Gome" />
 
             <TextView
@@ -29,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/tv_doctor_name"
                 android:layout_marginBottom="5dp"
+                android:fontFamily="@font/roboto"
                 android:text="Medicine Specialist" />
 
             <RatingBar
@@ -46,6 +48,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/tv_experience_number"
+                android:fontFamily="@font/roboto"
                 android:text="Experience" />
 
             <TextView
@@ -53,6 +56,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_above="@id/tv_patient"
+                android:fontFamily="@font/roboto_bold"
                 android:text="8 Years" />
 
             <TextView
@@ -61,6 +65,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/tv_patient_number"
                 android:layout_marginTop="10dp"
+                android:fontFamily="@font/roboto"
                 android:text="Patients" />
 
             <TextView
@@ -68,6 +73,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
+                android:fontFamily="@font/roboto_bold"
                 android:text="1.08K" />
 
         </RelativeLayout>

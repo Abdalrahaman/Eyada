@@ -20,7 +20,9 @@
                 android:id="@+id/tv_header"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Looking for Your desire specialist doctor" />
+                android:fontFamily="@font/roboto_medium"
+                android:text="Looking for Your desire specialist doctor"
+                android:textSize="16sp" />
 
             <TextView
                 android:id="@+id/tv_doctor_name"
@@ -28,6 +30,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/tv_specialist"
                 android:layout_alignStart="@id/tv_clinic"
+                android:fontFamily="@font/roboto_bold"
                 android:text="Dr. Osama elsayed" />
 
             <TextView
@@ -36,6 +39,7 @@
                 android:layout_height="wrap_content"
                 android:layout_above="@id/tv_clinic"
                 android:layout_alignStart="@id/tv_clinic"
+                android:fontFamily="@font/roboto"
                 android:text="Medicine and Heart Specialist" />
 
             <TextView
@@ -44,6 +48,7 @@
                 android:layout_height="wrap_content"
                 android:layout_alignParentBottom="true"
                 android:layout_toRightOf="@id/ly_line"
+                android:fontFamily="@font/roboto"
                 android:text="Good Health Clinic" />
 
             <RelativeLayout

@@ -62,7 +62,7 @@ class HomeFragment : Fragment() {
 
         // Initialize UI Components
         initUI()
-
+        //second time I enter the fragment it triggers his twice
         connectivityLiveData.observe(viewLifecycleOwner, Observer { isConnected ->
             if (isConnected){
                 Log.d(TAG, "error not occured: connected")
