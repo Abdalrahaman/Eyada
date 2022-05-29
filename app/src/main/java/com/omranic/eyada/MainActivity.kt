@@ -30,7 +30,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun initUIComponents(){
         // app tool bar
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.home_page_fragment, R.id.doctor_page_fragment, R.id.appointment_page_fragment, R.id.account_page_fragment))
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.home_page_fragment, R.id.doctor_page_fragment, R.id.appointment_page_fragment, R.id.setting_page_fragment))
         binding.topAppBar.setupWithNavController(navController, appBarConfiguration)
         // bottom navigation bar
         binding.bottomNavigationBar.setupWithNavController(navController)

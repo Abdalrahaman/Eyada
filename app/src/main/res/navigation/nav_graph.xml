@@ -21,8 +21,8 @@
         android:label="@string/appointment"
         tools:layout="@layout/fragment_appointment" />
     <fragment
-        android:id="@+id/account_page_fragment"
-        android:name="com.omranic.eyada.fragment.AccountFragment"
-        android:label="@string/account"
-        tools:layout="@layout/fragment_account" />
+        android:id="@+id/setting_page_fragment"
+        android:name="com.omranic.eyada.fragment.SettingFragment"
+        android:label="@string/setting"
+        tools:layout="@layout/fragment_setting" />
 </navigation>

@@ -1,5 +1,7 @@
 package com.omranic.eyada.repository
 
+import androidx.lifecycle.LiveData
+import com.omranic.eyada.db.EyadaDao
 import com.omranic.eyada.model.Ad
 import com.omranic.eyada.model.Appointment
 import com.omranic.eyada.model.Doctor
@@ -7,7 +9,9 @@ import com.omranic.eyada.network.EyadaApiService
 import retrofit2.Response
 import javax.inject.Inject
 
-class Repository @Inject constructor(private val eyadaApiService: EyadaApiService) {
+class Repository @Inject constructor(private val eyadaApiService: EyadaApiService, private val eyadaDao: EyadaDao) {
+
+    /* Access Data from Internet */
 
     // get ads
     suspend fun getAds(): Response<List<Ad>> {
@@ -34,4 +38,10 @@ class Repository @Inject constructor(private val eyadaApiService: EyadaApiServic
         return eyadaApiService.getDoctorsBySpecialist(specialist)
     }
 
+    /* Access Data from local Database */
+    fun insertDoctorToDB(doctors: List<Doctor>){
+        eyadaDao.insertDoctors(doctors)
+    }
+
+    fun getDoctorsFromDB() : LiveData<List<Doctor>> = eyadaDao.getDoctors()
 }

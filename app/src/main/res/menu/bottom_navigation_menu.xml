@@ -18,8 +18,8 @@
         android:title="@string/appointment"/>
 
     <item
-        android:id="@+id/account_page_fragment"
+        android:id="@+id/setting_page_fragment"
         android:enabled="true"
-        android:icon="@drawable/nav_account"
-        android:title="@string/account"/>
+        android:icon="@drawable/nav_setting"
+        android:title="@string/setting"/>
 </menu>

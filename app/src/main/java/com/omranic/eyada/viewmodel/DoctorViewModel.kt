@@ -24,10 +24,11 @@ class DoctorViewModel @Inject constructor(private val repository: Repository) : 
         try {
             val response = repository.getDoctors()
             doctors.postValue(handleDoctorsResponse(response))
+            insertDoctorToDB(response.body()!!)
         }catch (t: Throwable){
             when(t){
                 is IOException -> doctors.postValue(Resource.Error("Network Failure"))
-                else -> doctors.postValue(Resource.Error("Conversion Error"))
+                else -> doctors.postValue(Resource.Error(t.message.toString())) // "Conversion Error"
             }
         }
     }
@@ -68,4 +69,12 @@ class DoctorViewModel @Inject constructor(private val repository: Repository) : 
         }
         return Resource.Error(response.message())
     }
+
+    fun insertDoctorToDB(doctors: List<Doctor>){
+        repository.insertDoctorToDB(doctors)
+    }
+
+//    fun getDoctorsFromDB(){
+//        repository.getDoctorsFromDB()
+//    }
 }
