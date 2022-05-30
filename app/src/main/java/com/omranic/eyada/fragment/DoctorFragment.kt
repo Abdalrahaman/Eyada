@@ -46,10 +46,10 @@ class DoctorFragment : Fragment() {
 
         connectivityLiveData.observe(viewLifecycleOwner, Observer { isConnected ->
             if (isConnected){
-                Log.d(TAG, "error not occured: connected")
+                Log.d(TAG, "error not occurred: connected")
                 doctorViewModel.getDoctors()
             }else{
-                Log.e(TAG, "error occured: no internet connection")
+                Log.e(TAG, "error occurred: no internet connection")
             }
         })
 
@@ -66,7 +66,7 @@ class DoctorFragment : Fragment() {
                     binding.progressIndicator.visibility = View.INVISIBLE
                     binding.recyclerView.visibility = View.INVISIBLE
                     response.message?.let {
-                        Log.e(TAG, "error occured: $it")
+                        Log.e(TAG, "error occurred: $it")
                     }
                 }
                 is Resource.Loading -> {

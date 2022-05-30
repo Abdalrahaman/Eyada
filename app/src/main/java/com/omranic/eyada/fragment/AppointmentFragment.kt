@@ -46,10 +46,10 @@ class AppointmentFragment : Fragment() {
 
         connectivityLiveData.observe(viewLifecycleOwner, Observer { isConnected ->
             if (isConnected){
-                Log.d(TAG, "error not occured: connected")
+                Log.d(TAG, "error not occurred: connected")
                 appointmentViewModel.getAppointments(1)
             }else{
-                Log.e(TAG, "error occured: no internet connection")
+                Log.e(TAG, "error occurred: no internet connection")
             }
         })
 
@@ -66,7 +66,7 @@ class AppointmentFragment : Fragment() {
                     binding.progressIndicator.visibility = View.INVISIBLE
                     binding.rvAppointment.visibility = View.INVISIBLE
                     response.message.let {
-                        Log.e(TAG, "error occured: $it")
+                        Log.e(TAG, "error occurred: $it")
                     }
                 }
                 is Resource.Loading -> {

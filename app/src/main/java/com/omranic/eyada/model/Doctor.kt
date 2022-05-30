@@ -4,7 +4,6 @@ import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 import java.io.Serializable
-import javax.annotation.Nullable
 
 @Entity(tableName = "doctors")
 class Doctor(

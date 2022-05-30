@@ -32,6 +32,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:navGraph="@navigation/nav_graph" />
 
+    <TextView
+        android:id="@+id/tv_error"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="no internet connection"
+        android:gravity="center"
+        android:textColor="@color/md_theme_dark_error"
+        android:background="@color/md_theme_dark_errorContainer"
+        android:visibility="gone"/>
+
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottom_navigation_bar"
         android:layout_width="match_parent"

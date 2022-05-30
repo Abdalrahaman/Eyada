@@ -15,6 +15,11 @@ class ConnectivityLiveData @Inject constructor(@ApplicationContext context: Cont
     private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     private val validNetworks: MutableSet<Network> = HashSet()
     private val TAG = "ConnectivityLiveData"
+
+    init {
+        checkValidNetworks()
+    }
+
     private fun checkValidNetworks(){
         postValue(validNetworks.isNotEmpty())
         Log.d(TAG, "checkValidNetworks: ")
