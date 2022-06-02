@@ -1,3 +1,9 @@
 package com.omranic.eyada.model
 
-class Clinic(val name: String)
+import android.os.Parcelable
+import kotlinx.android.parcel.Parcelize
+
+@Parcelize
+class Clinic(
+    val name: String? = null
+) : Parcelable

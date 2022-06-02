@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import com.omranic.eyada.db.EyadaDao
 import com.omranic.eyada.model.Ad
 import com.omranic.eyada.model.Appointment
+import com.omranic.eyada.model.AvailableDoctor
 import com.omranic.eyada.model.Doctor
 import com.omranic.eyada.network.EyadaApiService
 import retrofit2.Response
@@ -19,7 +20,7 @@ class Repository @Inject constructor(private val eyadaApiService: EyadaApiServic
     }
 
     // get available doctors
-    suspend fun getAvailableDoctors(): Response<List<Doctor>> {
+    suspend fun getAvailableDoctors(): Response<List<AvailableDoctor>> {
         return eyadaApiService.getAvailableDoctors()
     }
 
@@ -39,9 +40,22 @@ class Repository @Inject constructor(private val eyadaApiService: EyadaApiServic
     }
 
     /* Access Data from local Database */
-    fun insertDoctorToDB(doctors: List<Doctor>){
+    fun insertAdsToDB(ads: List<Ad>){
+        eyadaDao.insertAds(ads)
+    }
+    fun insertAvailableDoctorsToDB(doctors: List<AvailableDoctor>){
+        eyadaDao.insertAvailableDoctors(doctors)
+    }
+    fun getAdsFromDB(): List<Ad> = eyadaDao.getAds()
+    fun getAvailableDoctorsFromDB(): List<AvailableDoctor> = eyadaDao.getAvailableDoctors()
+
+    fun insertDoctorsToDB(doctors: List<Doctor>){
         eyadaDao.insertDoctors(doctors)
     }
-
     fun getDoctorsFromDB() : LiveData<List<Doctor>> = eyadaDao.getDoctors()
+
+
+
+
+
 }

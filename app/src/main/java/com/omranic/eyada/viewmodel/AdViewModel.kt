@@ -1,15 +1,12 @@
 package com.omranic.eyada.viewmodel
 
-import android.content.Context
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.omranic.eyada.model.Ad
 import com.omranic.eyada.repository.Repository
 import com.omranic.eyada.util.Resource
-import dagger.hilt.android.internal.Contexts
 import dagger.hilt.android.lifecycle.HiltViewModel
-import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import retrofit2.Response
 import java.io.IOException
@@ -25,10 +22,11 @@ class AdViewModel @Inject constructor(private val repository: Repository) : View
         try {
             val response = repository.getAds()
             ads.postValue(handleAdsResponse(response))
+            insertAdsToDB(response.body()!!)
         }catch (t: Throwable){
             when(t){
-                is IOException -> ads.postValue(Resource.Error("Network Failure"))
-                else -> ads.postValue(Resource.Error("Conversion Error"))
+                is IOException -> ads.postValue(Resource.Error("Network Failure", getAdsFromDB()))
+                else -> ads.postValue(Resource.Error(t.message.toString())) //"Conversion Error"
             }
         }
     }
@@ -41,4 +39,10 @@ class AdViewModel @Inject constructor(private val repository: Repository) : View
         }
         return Resource.Error(response.message())
     }
+
+    private fun insertAdsToDB(ads: List<Ad>){
+        repository.insertAdsToDB(ads)
+    }
+
+    private fun getAdsFromDB(): List<Ad> = repository.getAdsFromDB()
 }

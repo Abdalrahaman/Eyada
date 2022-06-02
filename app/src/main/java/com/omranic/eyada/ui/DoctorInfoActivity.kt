@@ -26,8 +26,8 @@ class DoctorInfoActivity : AppCompatActivity() {
 
         initUI()
 
-        val doctor = intent.getSerializableExtra("doctor") as Doctor
-        doctor.let {
+        val doctor = intent.getParcelableExtra<Doctor>("doctor")
+        doctor?.let {
             Log.d(TAG, "onCreate: ${it.name}")
         }
 

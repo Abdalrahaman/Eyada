@@ -7,10 +7,11 @@ import android.net.NetworkCapabilities
 import android.net.NetworkRequest
 import android.util.Log
 import androidx.lifecycle.LiveData
+import com.omranic.eyada.controller.SingleLiveEvent
 import dagger.hilt.android.qualifiers.ApplicationContext
 import javax.inject.Inject
 
-class ConnectivityLiveData @Inject constructor(@ApplicationContext context: Context) : LiveData<Boolean>() {
+class ConnectivityLiveData @Inject constructor(@ApplicationContext context: Context) : SingleLiveEvent<Boolean>() {
     private lateinit var networkCallback: ConnectivityManager.NetworkCallback
     private val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
     private val validNetworks: MutableSet<Network> = HashSet()

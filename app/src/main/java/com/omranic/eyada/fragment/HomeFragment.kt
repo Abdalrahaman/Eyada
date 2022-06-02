@@ -62,15 +62,10 @@ class HomeFragment : Fragment() {
 
         // Initialize UI Components
         initUI()
-        //second time I enter the fragment it triggers his twice
-        connectivityLiveData.observe(viewLifecycleOwner, Observer { isConnected ->
-            if (isConnected){
-                Log.d(TAG, "error not occurred: connected")
-                adViewModel.getAds()
-                doctorViewModel.getAvailableDoctors()
-            }else{
-                Log.e(TAG, "error occurred: no internet connection")
-            }
+
+        connectivityLiveData.observe(viewLifecycleOwner, Observer {
+            adViewModel.getAds()
+            doctorViewModel.getAvailableDoctors()
         })
 
         adViewModel.ads.observe(viewLifecycleOwner, Observer {response ->
@@ -83,6 +78,9 @@ class HomeFragment : Fragment() {
                 is Resource.Error -> {
                     response.message?.let {
                         Log.e(TAG, "error occurred: $it")
+                    }
+                    response.data?.let {
+                        adAdapter.setAdsData(it)
                     }
                 }
                 is Resource.Loading -> {
@@ -105,6 +103,9 @@ class HomeFragment : Fragment() {
                 is Resource.Error -> {
                     response.message?.let {
                         Log.e(TAG, "error occurred: $it")
+                    }
+                    response.data?.let {
+                        doctorAdapter.setAvailableDoctorData(it)
                     }
                 }
                 is Resource.Loading -> {

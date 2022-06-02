@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.omranic.eyada.model.AvailableDoctor
 import com.omranic.eyada.model.Doctor
 import com.omranic.eyada.repository.Repository
 import com.omranic.eyada.util.Resource
@@ -17,14 +18,14 @@ import javax.inject.Inject
 @HiltViewModel
 class DoctorViewModel @Inject constructor(private val repository: Repository) : ViewModel() {
     val doctors : MutableLiveData<Resource<List<Doctor>>> = MutableLiveData()
-    val availableDoctors : MutableLiveData<Resource<List<Doctor>>> = MutableLiveData()
+    val availableDoctors : MutableLiveData<Resource<List<AvailableDoctor>>> = MutableLiveData()
 
     fun getDoctors() = viewModelScope.launch {
         doctors.postValue(Resource.Loading())
         try {
             val response = repository.getDoctors()
             doctors.postValue(handleDoctorsResponse(response))
-            insertDoctorToDB(response.body()!!)
+            insertDoctorsToDB(response.body()!!)
         }catch (t: Throwable){
             when(t){
                 is IOException -> doctors.postValue(Resource.Error("Network Failure"))
@@ -37,11 +38,12 @@ class DoctorViewModel @Inject constructor(private val repository: Repository) : 
         availableDoctors.postValue(Resource.Loading())
         try {
             val response = repository.getAvailableDoctors()
-            availableDoctors.postValue(handleDoctorsResponse(response))
+            availableDoctors.postValue(handleAvailableDoctorsResponse(response))
+            insertAvailableDoctorsToDB(response.body()!!)
         }catch (t: Throwable){
             when(t){
-                is IOException -> availableDoctors.postValue(Resource.Error("Network Failure"))
-                else -> availableDoctors.postValue(Resource.Error("Conversion Error"))
+                is IOException -> availableDoctors.postValue(Resource.Error("Network Failure", getAvailableDoctorsFromDB()))
+                else -> availableDoctors.postValue(Resource.Error(t.message.toString())) //"Conversion Error"
             }
         }
 
@@ -70,9 +72,23 @@ class DoctorViewModel @Inject constructor(private val repository: Repository) : 
         return Resource.Error(response.message())
     }
 
-    fun insertDoctorToDB(doctors: List<Doctor>){
-        repository.insertDoctorToDB(doctors)
+    private fun handleAvailableDoctorsResponse(response: Response<List<AvailableDoctor>>) : Resource<List<AvailableDoctor>>{
+        if (response.isSuccessful){
+            response.body()?.let {
+                return Resource.Success(it)
+            }
+        }
+        return Resource.Error(response.message())
     }
+
+    private fun insertDoctorsToDB(doctors: List<Doctor>){
+        repository.insertDoctorsToDB(doctors)
+    }
+
+    private fun insertAvailableDoctorsToDB(doctors: List<AvailableDoctor>){
+        repository.insertAvailableDoctorsToDB(doctors)
+    }
+    private fun getAvailableDoctorsFromDB(): List<AvailableDoctor> = repository.getAvailableDoctorsFromDB()
 
 //    fun getDoctorsFromDB(){
 //        repository.getDoctorsFromDB()
