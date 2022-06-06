@@ -1,13 +1,17 @@
 package com.omranic.eyada.fragment
 
-import android.content.Context
 import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.appcompat.app.AppCompatDelegate
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.omranic.eyada.R
 import com.omranic.eyada.controller.SharedPref
 import com.omranic.eyada.databinding.FragmentSettingBinding
 import dagger.hilt.android.AndroidEntryPoint
@@ -21,6 +25,13 @@ class SettingFragment : Fragment() {
 
     private lateinit var sharedPref: SharedPref
 
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this){
+
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -32,6 +43,8 @@ class SettingFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        initUI()
+
         sharedPref = SharedPref(context!!)
 
         binding.lyTheme.setOnClickListener {
@@ -42,8 +55,14 @@ class SettingFragment : Fragment() {
                 goToDarkMode()
                 sharedPref.setNightModeState(true)
             }
-            Log.d(TAG, "theme clicked ")
         }
+    }
+
+    private fun initUI(){
+        // app tool bar
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.setting_page_fragment))
+        activity?.findNavController(R.id.nav_host_fragment)
+            ?.let { binding.topAppBar.setupWithNavController(it, appBarConfiguration) }
     }
 
     private fun goToDarkMode(){

@@ -6,8 +6,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.omranic.eyada.R
 import com.omranic.eyada.adapter.doctor.DoctorAdapter
 import com.omranic.eyada.databinding.FragmentDoctorBinding
 import com.omranic.eyada.util.Resource
@@ -20,7 +26,7 @@ import javax.inject.Inject
 class DoctorFragment : Fragment() {
 
     private val TAG = "DoctorFragment"
-    private var _binding: FragmentDoctorBinding?= null
+    private var _binding: FragmentDoctorBinding? = null
     private val binding get() = _binding!!
 
     private val doctorViewModel: DoctorViewModel by activityViewModels()
@@ -29,6 +35,13 @@ class DoctorFragment : Fragment() {
     lateinit var connectivityLiveData: ConnectivityLiveData
 
     private lateinit var doctorAdapter: DoctorAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this) {
+
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -45,16 +58,16 @@ class DoctorFragment : Fragment() {
         initUI()
 
         connectivityLiveData.observe(viewLifecycleOwner, Observer { isConnected ->
-            if (isConnected){
+            if (isConnected) {
                 Log.d(TAG, "error not occurred: connected")
                 doctorViewModel.getDoctors()
-            }else{
+            } else {
                 Log.e(TAG, "error occurred: no internet connection")
             }
         })
 
-        doctorViewModel.doctors.observe(viewLifecycleOwner, Observer {response ->
-            when(response){
+        doctorViewModel.doctors.observe(viewLifecycleOwner, Observer { response ->
+            when (response) {
                 is Resource.Success -> {
                     binding.progressIndicator.visibility = View.INVISIBLE
                     binding.recyclerView.visibility = View.VISIBLE
@@ -77,7 +90,7 @@ class DoctorFragment : Fragment() {
         })
 
         binding.chipLayout.chipSpecialistGroup.setOnCheckedStateChangeListener { group, checkedIds ->
-            when(group.checkedChipId){
+            when (group.checkedChipId) {
                 binding.chipLayout.chipAll.id -> doctorViewModel.getDoctors()
                 binding.chipLayout.chipCardiologist.id -> doctorViewModel.getDoctorsBySpecialist("Cardiologist")
                 binding.chipLayout.chipNeurosurgery.id -> doctorViewModel.getDoctorsBySpecialist("Neurosurgery")
@@ -87,7 +100,11 @@ class DoctorFragment : Fragment() {
         }
     }
 
-    private fun initUI(){
+    private fun initUI() {
+        // app tool bar
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.doctor_page_fragment))
+        activity?.findNavController(R.id.nav_host_fragment)
+            ?.let { binding.topAppBar.setupWithNavController(it, appBarConfiguration) }
         // initialize Doctor Adapter Adapter
         doctorAdapter = DoctorAdapter()
         binding.recyclerView.adapter = doctorAdapter

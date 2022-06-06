@@ -1,11 +1,20 @@
 <resources>
     <string name="app_name">Eyada</string>
 
-    <string name="search">Search</string>
     <string name="home">Home</string>
     <string name="doctor">Doctor</string>
     <string name="appointment">Appointment</string>
     <string name="setting">Setting</string>
+
+    <string name="doctor_info">Doctor Info</string>
+
+    <string name="login">Login</string>
+    <string name="signup">Sign up</string>
+    <string name="search">Search</string>
+
+    <string name="email_error">Email is wrong</string>
+    <string name="password_error">Password is Incorrect</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="home_fragment">Home fragment</string>
     <string name="doctor_fragment">Doctor fragment</string>

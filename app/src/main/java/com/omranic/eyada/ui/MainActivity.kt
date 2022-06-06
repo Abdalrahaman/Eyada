@@ -1,16 +1,13 @@
-package com.omranic.eyada
+package com.omranic.eyada.ui
 
-import android.content.Context
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AppCompatDelegate
 import androidx.lifecycle.Observer
-import androidx.navigation.NavController
 import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.omranic.eyada.R
 import com.omranic.eyada.controller.SharedPref
 import com.omranic.eyada.databinding.ActivityMainBinding
 import com.omranic.eyada.viewmodel.ConnectivityLiveData
@@ -25,7 +22,6 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var sharedPref: SharedPref
 
-    private lateinit var navController: NavController
     @Inject
     lateinit var connectivityLiveData: ConnectivityLiveData
 
@@ -36,40 +32,48 @@ class MainActivity : AppCompatActivity() {
 
         sharedPref = SharedPref(this)
 
-        if (sharedPref.getNightModeState()){
+        if (sharedPref.getNightModeState()) {
             goToDarkMode()
-        }else{
+        } else {
             goToLightMode()
         }
 
-        // get Navigation Controller
-        val navHostFragment = supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
-
         initUIComponents()
 
-        connectivityLiveData.observe(this, Observer {isConnected ->
-            if (isConnected){
+        connectivityLiveData.observe(this, Observer { isConnected ->
+            if (isConnected) {
                 binding.tvError.visibility = View.GONE
-            }else{
+            } else {
                 binding.tvError.visibility = View.VISIBLE
             }
         })
     }
 
-    private fun initUIComponents(){
-        // app tool bar
-        val appBarConfiguration = AppBarConfiguration(setOf(R.id.home_page_fragment, R.id.doctor_page_fragment, R.id.appointment_page_fragment, R.id.setting_page_fragment))
-        binding.topAppBar.setupWithNavController(navController, appBarConfiguration)
+    private fun initUIComponents() {
+        // get Navigation Controller
+        val navHostFragment =
+            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
+        val navController = navHostFragment.navController
+
         // bottom navigation bar
         binding.bottomNavigationBar.setupWithNavController(navController)
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id){
+                R.id.home_page_fragment,
+                R.id.doctor_page_fragment,
+                R.id.appointment_page_fragment,
+                R.id.setting_page_fragment -> binding.bottomNavigationBar.visibility = View.VISIBLE
+                R.id.doctor_info_fragment -> binding.bottomNavigationBar.visibility = View.GONE
+            }
+        }
     }
 
-    private fun goToDarkMode(){
+    private fun goToDarkMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES)
     }
 
-    private fun goToLightMode(){
+    private fun goToLightMode() {
         AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO)
     }
 }

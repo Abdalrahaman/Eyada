@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/home_page_fragment">
+    app:startDestination="@id/login_page_fragment">
 
     <fragment
         android:id="@+id/home_page_fragment"
@@ -14,7 +14,11 @@
         android:id="@+id/doctor_page_fragment"
         android:name="com.omranic.eyada.fragment.DoctorFragment"
         android:label="@string/doctor"
-        tools:layout="@layout/fragment_doctor" />
+        tools:layout="@layout/fragment_doctor" >
+        <action
+            android:id="@+id/action_doctor_page_fragment_to_doctorInfoFragment"
+            app:destination="@id/doctor_info_fragment" />
+    </fragment>
     <fragment
         android:id="@+id/appointment_page_fragment"
         android:name="com.omranic.eyada.fragment.AppointmentFragment"
@@ -25,4 +29,39 @@
         android:name="com.omranic.eyada.fragment.SettingFragment"
         android:label="@string/setting"
         tools:layout="@layout/fragment_setting" />
+    <fragment
+        android:id="@+id/login_page_fragment"
+        android:name="com.omranic.eyada.fragment.LoginFragment"
+        android:label="@string/login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_login_page_fragment_to_home_page_fragment"
+            app:destination="@id/home_page_fragment" />
+        <action
+            android:id="@+id/action_login_page_fragment_to_sign_up_fragment"
+            app:destination="@id/sign_up_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sign_up_fragment"
+        android:name="com.omranic.eyada.fragment.SignUpFragment"
+        android:label="@string/signup"
+        tools:layout="@layout/fragment_sign_up" >
+        <action
+            android:id="@+id/action_sign_up_fragment_to_sign_up_info_fragment"
+            app:destination="@id/sign_up_info_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/sign_up_info_fragment"
+        android:name="com.omranic.eyada.fragment.SignUpInfoFragment"
+        android:label="@string/signup"
+        tools:layout="@layout/fragment_sign_up_info" >
+        <action
+            android:id="@+id/action_sign_up_info_fragment_to_home_page_fragment"
+            app:destination="@id/home_page_fragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/doctor_info_fragment"
+        android:name="com.omranic.eyada.fragment.DoctorInfoFragment"
+        android:label="@string/doctor_info"
+        tools:layout="@layout/fragment_doctor_info" />
 </navigation>

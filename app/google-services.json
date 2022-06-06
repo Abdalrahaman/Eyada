@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "902994475991",
+    "project_id": "eyada-aa79f",
+    "storage_bucket": "eyada-aa79f.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902994475991:android:e4ea6e584174fb7f64e992",
+        "android_client_info": {
+          "package_name": "com.omranic.eyada"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902994475991-pvdpie2eijuc0ltn3b34qisptd2n3dfn.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBjhxNB2CaIFFng4Xy7hI3Rds40PSfTXlg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902994475991-pvdpie2eijuc0ltn3b34qisptd2n3dfn.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

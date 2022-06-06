@@ -9,12 +9,18 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
 import androidx.recyclerview.widget.RecyclerView
 import androidx.viewpager2.widget.CompositePageTransformer
 import androidx.viewpager2.widget.MarginPageTransformer
 import androidx.viewpager2.widget.ViewPager2
+import com.google.android.material.bottomnavigation.BottomNavigationView
+import com.omranic.eyada.R
 import com.omranic.eyada.adapter.home.AdAdapter
 import com.omranic.eyada.adapter.home.CategoryAdapter
 import com.omranic.eyada.adapter.home.AvailableDoctorAdapter
@@ -47,6 +53,13 @@ class HomeFragment : Fragment() {
 
     private lateinit var adAdapter: AdAdapter
     private lateinit var doctorAdapter: AvailableDoctorAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this){
+
+        }
+    }
 
 
     override fun onCreateView(
@@ -116,6 +129,10 @@ class HomeFragment : Fragment() {
     }
 
     private fun initUI(){
+        // app tool bar
+        val navController = activity?.findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.home_page_fragment))
+        binding.topAppBar.setupWithNavController(navController!!, appBarConfiguration)
         // initialize Ads Adapter
         adAdapter = AdAdapter()
         binding.viewpager2.adapter = adAdapter

@@ -7,6 +7,17 @@
     android:orientation="vertical"
     tools:context=".fragment.DoctorFragment">
 
+    <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <com.google.android.material.appbar.MaterialToolbar
+            android:id="@+id/top_app_bar"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:title="@string/app_name" />
+    </com.google.android.material.appbar.AppBarLayout>
+
     <include
         android:id="@+id/chip_layout"
         layout="@layout/chip_layout" />

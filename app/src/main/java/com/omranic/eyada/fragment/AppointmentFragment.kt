@@ -6,8 +6,13 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.addCallback
 import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
+import androidx.navigation.ui.AppBarConfiguration
+import androidx.navigation.ui.setupWithNavController
+import com.omranic.eyada.R
 import com.omranic.eyada.adapter.appointment.AppointmentAdapter
 import com.omranic.eyada.databinding.FragmentAppointmentBinding
 import com.omranic.eyada.util.Resource
@@ -29,6 +34,13 @@ class AppointmentFragment : Fragment() {
     lateinit var connectivityLiveData: ConnectivityLiveData
 
     private lateinit var appointmentAdapter: AppointmentAdapter
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        val callback = requireActivity().onBackPressedDispatcher.addCallback(this){
+
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -78,6 +90,10 @@ class AppointmentFragment : Fragment() {
     }
 
     private fun initUI(){
+        // app tool bar
+        val appBarConfiguration = AppBarConfiguration(setOf(R.id.appointment_page_fragment))
+        activity?.findNavController(R.id.nav_host_fragment)
+            ?.let { binding.topAppBar.setupWithNavController(it, appBarConfiguration) }
         // initialize Appointment Adapter Adapter
         appointmentAdapter = AppointmentAdapter()
         binding.rvAppointment.adapter = appointmentAdapter

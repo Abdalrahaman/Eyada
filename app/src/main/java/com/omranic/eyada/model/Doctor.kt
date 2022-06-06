@@ -5,11 +5,9 @@ import androidx.annotation.Keep
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import kotlinx.android.parcel.Parcelize
-import java.io.Serializable
-import javax.annotation.Nullable
 
-@Parcelize
+@Keep
+@kotlinx.parcelize.Parcelize
 @Entity(tableName = "doctors")
 class Doctor(
     @PrimaryKey
