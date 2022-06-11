@@ -24,11 +24,12 @@ class Repository @Inject constructor(
         password: String,
         firstName: String,
         lastName: String,
+        age: Int,
         phone: String,
         address: String,
         city: String
     ): Response<PatientResponse> {
-        return eyadaApiService.signUp(userName, email, password, firstName, lastName, phone, address, city)
+        return eyadaApiService.signUp(userName, email, password, firstName, lastName, age, phone, address, city)
     }
 
     // get ads

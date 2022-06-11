@@ -1,5 +1,6 @@
 package com.omranic.eyada.fragment
 
+import android.content.Context
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -12,10 +13,13 @@ import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.omranic.eyada.R
+import com.omranic.eyada.controller.SharedPref
 import com.omranic.eyada.databinding.FragmentLoginBinding
 import com.omranic.eyada.util.Resource
 import com.omranic.eyada.viewmodel.PatientAuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private val TAG = "LoginFragment"
@@ -24,6 +28,7 @@ class LoginFragment : Fragment() {
 
     private val patientAuthViewModel: PatientAuthViewModel by activityViewModels()
 
+    private lateinit var sharedPref: SharedPref
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -36,12 +41,28 @@ class LoginFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        sharedPref = SharedPref(context!!)
+
+        if (sharedPref.getPatientLoginState()) {
+            view.findNavController().navigate(R.id.action_login_page_fragment_to_home_page_fragment)
+        }
+
         initUI()
 
         patientAuthViewModel.patientLoginResult.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
                 is Resource.Success -> {
                     response.data?.let {
+                        sharedPref.setPatientLoginState(
+                            it.id,
+                            it.firstName,
+                            it.lastName,
+                            it.age,
+                            it.phone,
+                            it.address.address,
+                            it.address.city,
+                            true
+                        )
                         binding.progressIndicator.visibility = View.GONE
                         binding.root.findNavController()
                             .navigate(R.id.action_login_page_fragment_to_home_page_fragment)
@@ -50,9 +71,11 @@ class LoginFragment : Fragment() {
                 is Resource.Error -> {
                     binding.progressIndicator.visibility = View.GONE
                     response.message?.let {
-                        when (it){
-                            getString(R.string.email_error) -> binding.tilUserName.error = getString(R.string.email_error)
-                            getString(R.string.password_error) -> binding.tilPassword.error = getString(R.string.password_error)
+                        when (it) {
+                            getString(R.string.email_error) -> binding.tilUserName.error =
+                                getString(R.string.email_error)
+                            getString(R.string.password_error) -> binding.tilPassword.error =
+                                getString(R.string.password_error)
                             else -> binding.tvNetworkError.text = it
                         }
                     }
@@ -83,7 +106,7 @@ class LoginFragment : Fragment() {
         }
     }
 
-    private fun initUI(){
+    private fun initUI() {
         // app tool bar
         val appBarConfiguration = AppBarConfiguration(setOf(R.id.login_page_fragment))
         activity?.findNavController(R.id.nav_host_fragment)

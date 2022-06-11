@@ -64,7 +64,9 @@ class MainActivity : AppCompatActivity() {
                 R.id.doctor_page_fragment,
                 R.id.appointment_page_fragment,
                 R.id.setting_page_fragment -> binding.bottomNavigationBar.visibility = View.VISIBLE
-                R.id.doctor_info_fragment -> binding.bottomNavigationBar.visibility = View.GONE
+                R.id.doctor_info_fragment,
+                R.id.sign_up_info_fragment,
+                R.id.login_page_fragment -> binding.bottomNavigationBar.visibility = View.GONE
             }
         }
     }

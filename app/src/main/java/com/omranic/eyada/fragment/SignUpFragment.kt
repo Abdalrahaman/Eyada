@@ -11,7 +11,9 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.omranic.eyada.R
 import com.omranic.eyada.databinding.FragmentSignUpBinding
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpFragment : Fragment() {
 
     private var _binding: FragmentSignUpBinding? = null
@@ -32,6 +34,7 @@ class SignUpFragment : Fragment() {
 
         binding.btNext.setOnClickListener {
             val bundle = bundleOf(
+                "source_id" to 1,
                 "user_name" to binding.tifUserName.text.toString(),
                 "email" to binding.tifEmail.text.toString(),
                 "password" to binding.tifPassword.text.toString()

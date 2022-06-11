@@ -48,7 +48,7 @@
         </com.google.android.material.appbar.AppBarLayout>
 
         <include
-            android:id="@+id/info_context"
+            android:id="@+id/doctor_info_context"
             layout="@layout/doctor_info_content" />
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

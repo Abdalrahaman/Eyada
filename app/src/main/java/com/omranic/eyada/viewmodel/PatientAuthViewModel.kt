@@ -1,6 +1,5 @@
 package com.omranic.eyada.viewmodel
 
-import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -38,13 +37,14 @@ class PatientAuthViewModel @Inject constructor(private val repository: Repositor
         password: String,
         firstName: String,
         lastName: String,
+        age: Int,
         phone: String,
         address: String,
         city: String
     ) = viewModelScope.launch {
         patientSignUpResult.postValue(Resource.Loading())
         try {
-            val response = repository.signUp(userName, email, password, firstName, lastName, phone, address, city)
+            val response = repository.signUp(userName, email, password, firstName, lastName, age, phone, address, city)
             patientSignUpResult.postValue(handlePatientSignUpResponse(response))
         } catch (t: Throwable) {
             when (t) {

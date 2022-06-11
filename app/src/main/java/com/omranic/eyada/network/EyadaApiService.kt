@@ -20,6 +20,7 @@ interface EyadaApiService {
         @Field("password") password: String,
         @Field("first_name") firstName: String,
         @Field("last_name") lastName: String,
+        @Field("age") age: Int,
         @Field("phone") phone: String,
         @Field("address") address: String,
         @Field("city") city: String

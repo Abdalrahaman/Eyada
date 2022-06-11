@@ -12,16 +12,34 @@ import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.omranic.eyada.R
 import com.omranic.eyada.databinding.FragmentSignUpInfoBinding
+import com.omranic.eyada.model.Patient
 import com.omranic.eyada.util.Resource
 import com.omranic.eyada.viewmodel.PatientAuthViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class SignUpInfoFragment : Fragment() {
 
     private val TAG = "SignUpInfoFragment"
     private var _binding: FragmentSignUpInfoBinding? = null
     private val binding get() = _binding!!
 
+    private var sourceId: Int ? = 0
+    private lateinit var patientInfo: Patient
+
     private val patientAuthViewModel: PatientAuthViewModel by activityViewModels()
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        sourceId = arguments?.getInt("source_id")
+        if (sourceId == 1){
+
+        }else if (sourceId == 2){
+            arguments?.let {
+                patientInfo = it.getParcelable("patient")!!
+            }
+        }
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -34,7 +52,11 @@ class SignUpInfoFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        initUI()
+        if (sourceId == 1){
+            initSignUpUi()
+        }else if (sourceId == 2){
+            initEditProfileUi()
+        }
 
         patientAuthViewModel.patientSignUpResult.observe(viewLifecycleOwner, Observer { response ->
             when (response) {
@@ -61,23 +83,43 @@ class SignUpInfoFragment : Fragment() {
         })
 
         binding.btSignUp.setOnClickListener {
-            patientAuthViewModel.patientSignUp(
-                arguments?.getString("user_name").toString(),
-                arguments?.getString("email").toString(),
-                arguments?.getString("password").toString(),
-                binding.tifFirstName.text.toString(),
-                binding.tifLastName.text.toString(),
-                binding.tifPhone.text.toString(),
-                binding.tifAddress.text.toString(),
-                binding.tifCity.text.toString()
-            )
+            if (sourceId == 1) {
+                patientAuthViewModel.patientSignUp(
+                    arguments?.getString("user_name").toString(),
+                    arguments?.getString("email").toString(),
+                    arguments?.getString("password").toString(),
+                    binding.tifFirstName.text.toString(),
+                    binding.tifLastName.text.toString(),
+                    binding.tifAge.text.toString().toInt(),
+                    binding.tifPhone.text.toString(),
+                    binding.tifAddress.text.toString(),
+                    binding.tifCity.text.toString()
+                )
+            }
         }
     }
 
-    private fun initUI(){
+    private fun initSignUpUi(){
         // app tool bar
         val navController = activity?.findNavController(R.id.nav_host_fragment)
         val appBarConfiguration = navController?.let { AppBarConfiguration(it.graph) }
         binding.topAppBar.setupWithNavController(navController!!, appBarConfiguration!!)
+    }
+
+    private fun initEditProfileUi(){
+        // app tool bar
+        val navController = activity?.findNavController(R.id.nav_host_fragment)
+        val appBarConfiguration = navController?.let { AppBarConfiguration(it.graph) }
+        binding.topAppBar.setupWithNavController(navController!!, appBarConfiguration!!)
+
+        binding.topAppBar.title = "Edit Profile"
+        binding.btSignUp.text = "Save"
+
+        binding.tifFirstName.setText(patientInfo.firstName)
+        binding.tifLastName.setText(patientInfo.lastName)
+        binding.tifAge.setText(patientInfo.age.toString())
+        binding.tifPhone.setText(patientInfo.phone)
+        binding.tifAddress.setText(patientInfo.address.address)
+        binding.tifCity.setText(patientInfo.address.city)
     }
 }

@@ -16,7 +16,9 @@ import com.omranic.eyada.adapter.appointment.DatePickerAdapter
 import com.omranic.eyada.controller.EyadaDatePicker
 import com.omranic.eyada.databinding.FragmentDoctorInfoBinding
 import com.omranic.eyada.model.Doctor
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class DoctorInfoFragment : Fragment() {
 
     private val TAG = "DoctorInfoFragment"
@@ -40,8 +42,8 @@ class DoctorInfoFragment : Fragment() {
         initUI()
 
         val doctor = arguments?.getParcelable<Doctor>("doctor")
-        doctor?.let {
-            Log.d(TAG, "onCreate: ${it.name}")
+        doctor?.apply {
+            binding.doctorInfoContext.tvDoctorName.text = name
         }
 
         // add date picker

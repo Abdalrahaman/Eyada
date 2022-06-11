@@ -17,15 +17,18 @@
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable-v24/outline_assignment_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable-v24/outline_one_person_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable-v24/outline_people_24.xml" value="0.1445" />
+        <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_account_circle-24px.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_baseline_confirmed_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_baseline_date_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_baseline_email_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_baseline_pending_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_baseline_settings_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_baseline_time_24.xml" value="0.1445" />
+        <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_dark_mode_24px.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_dark_mode_48.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_outline_location_on_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_outline_phone_24.xml" value="0.1445" />
+        <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_outline_price_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/drawable/ic_outline_settings_24.xml" value="0.1445" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/font/roboto_font.xml" value="0.2675925925925926" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/font/roboto_medium.xml" value="0.2675925925925926" />
@@ -47,6 +50,7 @@
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/layout/fragment_appointment.xml" value="0.213768115942029" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/layout/fragment_doctor.xml" value="0.213768115942029" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/layout/fragment_doctor_info.xml" value="0.20878623188405798" />
+        <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/layout/fragment_doctor_sign_up.xml" value="0.20878623188405798" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/layout/fragment_home.xml" value="0.213768115942029" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/layout/fragment_login.xml" value="0.20878623188405798" />
         <entry key="..\:/ProAbdoCode/Android/Eyada/app/src/main/res/layout/fragment_setting.xml" value="0.2" />
